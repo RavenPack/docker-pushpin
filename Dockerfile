@@ -10,18 +10,20 @@ FROM ubuntu:22.04 as build
 # Install deps
 RUN \
   apt-get update && \
-  apt-get install -y git pkg-config make g++ rustc cargo libssl-dev qtbase5-dev libzmq3-dev libboost-dev
+  apt-get install -y git pkg-config make g++ rustc cargo libssl-dev qtbase5-dev libzmq3-dev libboost-dev && \
+  apt-get install unzip
 
 WORKDIR /build
 
 ENV VERSION 1.40.1
 
-ADD https://github.com/fastly/pushpin/releases/download/v${VERSION}/pushpin-${VERSION}.tar.bz2 .
+ADD https://github.com/RavenPack/pushpin/archive/refs/heads/v${VERSION}-rp.zip .
 
-RUN tar xf pushpin-${VERSION}.tar.bz2 && mv pushpin-${VERSION} pushpin
+RUN unzip v${VERSION}-rp.zip && mv pushpin-${VERSION}-rp pushpin
 
 WORKDIR /build/pushpin
 
+RUN make PREFIX=/usr CONFIGDIR=/etc
 RUN make RELEASE=1 PREFIX=/usr CONFIGDIR=/etc
 RUN make RELEASE=1 PREFIX=/usr CONFIGDIR=/etc check
 RUN make RELEASE=1 PREFIX=/usr CONFIGDIR=/etc INSTALL_ROOT=/build/out install

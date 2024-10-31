@@ -40,11 +40,7 @@ RUN \
 
 COPY --from=build /build/out/ /
 
-# Add entrypoint script
-COPY docker-entrypoint.sh /usr/local/bin/
-
 # Define default entrypoint and command
-ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["pushpin", "--merge-output"]
 
 # Expose ports.

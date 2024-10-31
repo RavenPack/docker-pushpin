@@ -50,6 +50,4 @@ docker run \
   fanout/pushpin
 ```
 
-Note: The Docker entrypoint may make modifications to `pushpin.conf` so it runs properly in its container, exposing ports `7999`, `5560`, `5561`, `5562`, and `5563`.
-
 See project documentation for more on [configuring Pushpin](https://pushpin.org/docs/configuration/).
